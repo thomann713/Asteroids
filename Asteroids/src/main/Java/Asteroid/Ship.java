@@ -1,6 +1,8 @@
+package Asteroid;
+
 /**
  * A class representing a players ship
- * A Ship has:
+ * A Asteroid.Ship has:
  * position
  * direction
  * speed
@@ -11,7 +13,7 @@
 public class Ship {
 
     /**
-     * Ship constructor
+     * Asteroid.Ship constructor
      */
     Ship() {
         //set position to middle of the screen

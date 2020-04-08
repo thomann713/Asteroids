@@ -1,3 +1,5 @@
+package Asteroid;
+
 /**
  * Class for the position of an object
  * OR a 2D coordinate system
