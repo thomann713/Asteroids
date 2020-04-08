@@ -1,5 +1,5 @@
 package Asteroid;
 
 public enum EntityType {
-    PLAYER, ASTEROID
+    PLAYER, ASTEROID, BULLET
 }

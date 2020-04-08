@@ -10,6 +10,10 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -35,10 +39,28 @@ public class AsteroidsApp extends GameApplication {
 	protected void initInput() {
 		Input input = FXGL.getInput();
 
+
+		input.addAction(new UserAction("Direction") {
+
+			@Override
+			protected void onAction() {
+				Input input = FXGL.getInput();
+				Point2D cursorPointInWorld = input.getMousePositionWorld();
+				int coordinates = (int) cursorPointInWorld.getX();
+				FXGL.getGameState().setValue("pixelsMoved", coordinates);
+			}
+		}, KeyCode.F);
+
+
+
+
 		input.addAction(new UserAction("Move Right") {
 			@Override
 			protected void onAction() {
-				player.translateX(5); // move right 5 pixels
+				player.translateX(3); // move right 5 pixels
+				player.rotateBy(5);
+
+
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
 		}, KeyCode.D);
@@ -46,7 +68,8 @@ public class AsteroidsApp extends GameApplication {
 		input.addAction(new UserAction("Move Left") {
 			@Override
 			protected void onAction() {
-				player.translateX(-5); // move left 5 pixels
+				player.translateX(-3); // move left 5 pixels
+				player.rotateBy(355);
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
 		}, KeyCode.A);
@@ -54,7 +77,7 @@ public class AsteroidsApp extends GameApplication {
 		input.addAction(new UserAction("Move Up") {
 			@Override
 			protected void onAction() {
-				player.translateY(-5); // move up 5 pixels
+				player.translateY(-3); // move up 5 pixels
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
 		}, KeyCode.W);
@@ -62,7 +85,7 @@ public class AsteroidsApp extends GameApplication {
 		input.addAction(new UserAction("Move Down") {
 			@Override
 			protected void onAction() {
-				player.translateY(5); // move down 5 pixels
+				player.translateY(3); // move down 5 pixels
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
 		}, KeyCode.S);
@@ -92,6 +115,23 @@ public class AsteroidsApp extends GameApplication {
 				.viewWithBBox(new Circle(15, Color.DARKGRAY))
 				.with(new CollidableComponent(true))
 				.buildAndAttach();
+/*
+		PhysicsComponent physics = new PhysicsComponent();
+
+		physics.setBodyType(BodyType.DYNAMIC);
+
+// these are direct jbox2d objects, so we don't actually introduce new API
+		FixtureDef fd = new FixtureDef();
+		fd.setDensity(0.7f);
+		fd.setRestitution(0.3f);
+		physics.setFixtureDef(fd);
+
+
+		player.addComponent(physics);
+
+		FXGL.getGameWorld().addEntity(player);
+
+ */
 	}
 
 	@Override
@@ -113,6 +153,8 @@ public class AsteroidsApp extends GameApplication {
 		textPixels.setTranslateY(100); // y = 100
 
 		textPixels.textProperty().bind(FXGL.getGameState().intProperty("pixelsMoved").asString());
+
+
 
 		FXGL.getGameScene().addUINode(textPixels); // add to the scene graph
 
