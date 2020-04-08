@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+
 import java.util.Map;
 
 
@@ -91,6 +92,13 @@ public class AsteroidsApp extends GameApplication {
 				.at(500, 200)
 				.viewWithBBox(new Circle(15, Color.DARKGRAY))
 				.with(new CollidableComponent(true))
+				.buildAndAttach();
+
+		// set background
+		FXGL.entityBuilder()
+				.at(0, 0)
+				.zIndex(-1) // behind everything
+				.view(new Rectangle(800, 600, Color.BLACK))
 				.buildAndAttach();
 	}
 
