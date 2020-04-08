@@ -1,4 +1,4 @@
-package Asteroid;
+package sgAsteroids;
 
 /**
  * A class representing a players ship

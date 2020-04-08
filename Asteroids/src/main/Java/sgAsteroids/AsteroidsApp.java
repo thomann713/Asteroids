@@ -1,4 +1,4 @@
-package Asteroid;
+package sgAsteroids;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -16,7 +16,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 public class AsteroidsApp extends GameApplication {
@@ -100,6 +103,23 @@ public class AsteroidsApp extends GameApplication {
 				.zIndex(-1) // behind everything
 				.view(new Rectangle(800, 600, Color.BLACK))
 				.buildAndAttach();
+
+		// create random asteroids
+		createRandomAsteroids();
+	}
+
+	private void createRandomAsteroids() {
+		int numOfAsteroids = 20;
+		for(int i = 0; i < numOfAsteroids; i++) {
+			int rx = new Random().nextInt(800);
+			int ry = new Random().nextInt(800);
+			Asteroid a = new Asteroid();
+			FXGL.entityBuilder()
+				.at(rx, ry)
+				.bbox(new HitBox("ASTEROID_BODY", BoundingShape.box(a.getX(), a.getY())))
+				.viewWithBBox(new Asteroid())
+				.buildAndAttach();
+		}
 	}
 
 	@Override
