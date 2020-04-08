@@ -7,12 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Asteroids/src/main/Java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Asteroids/src/main/resources" type="java-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/Asteroids/src" />
-      <excludeFolder url="file://$MODULE_DIR$/Asteroids/src/main" />
+      <sourceFolder url="file://$MODULE_DIR$/Asteroids/src/main/Java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
+    <content url="file://$MODULE_DIR$/Asteroids/src/main" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: junit:junit:4.13" level="project" />

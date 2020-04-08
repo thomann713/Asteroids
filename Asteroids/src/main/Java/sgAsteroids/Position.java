@@ -1,4 +1,4 @@
-package Asteroid;
+package sgAsteroids;
 
 /**
  * Class for the position of an object

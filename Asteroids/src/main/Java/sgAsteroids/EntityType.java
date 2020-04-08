@@ -1,4 +1,4 @@
-package Asteroid;
+package sgAsteroids;
 
 public enum EntityType {
     PLAYER, ASTEROID, BULLET
