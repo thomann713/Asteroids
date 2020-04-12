@@ -4,6 +4,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
@@ -116,12 +117,6 @@ public class AsteroidsApp extends GameApplication {
 				.viewWithBBox(new Circle(15, Color.DARKGRAY))
 				.with(new CollidableComponent(true))
 				.buildAndAttach();
-
-		/*
-		FXGL.getGameWorld().addEntityFactory(new MyAsteroidFactory());
-		FXGL.spawn("asteroid");
-
-		 */
 		
 		// set background
 		FXGL.entityBuilder()
@@ -155,16 +150,23 @@ public class AsteroidsApp extends GameApplication {
 
 
 	private void createRandomAsteroids() {
+
+		FXGL.getGameWorld().addEntityFactory(new MyAsteroidFactory());
+
 		int numOfAsteroids = 40;
 		for(int i = 0; i < numOfAsteroids; i++) {
 			int rx = new Random().nextInt(800);
 			int ry = new Random().nextInt(800);
-			Asteroid a = new Asteroid();
-			FXGL.entityBuilder()
-					.at(rx, ry)
-					.bbox(new HitBox("ASTEROID_BODY", BoundingShape.box(a.getX(), a.getY())))
-					.viewWithBBox(new Asteroid())
-					.buildAndAttach();
+			SpawnData sd = new SpawnData(rx, ry);
+			sd.put("hitBoxX", 3.4);
+			sd.put("hitBoxY", 4.5);
+			FXGL.spawn("asteroid", sd);
+//			Asteroid a = new Asteroid();
+//			FXGL.entityBuilder()
+//					.at(rx, ry)
+//					.bbox(new HitBox("ASTEROID_BODY", BoundingShape.box(a.getX(), a.getY())))
+//					.viewWithBBox(new Asteroid())
+//					.buildAndAttach();
 		}
 	}
 

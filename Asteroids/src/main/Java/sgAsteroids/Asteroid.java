@@ -1,5 +1,6 @@
 package sgAsteroids;
 
+import com.almasb.fxgl.entity.Entity;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
