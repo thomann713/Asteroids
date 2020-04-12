@@ -1,15 +1,12 @@
 package sgAsteroids;
 
-import com.almasb.fxgl.entity.Entity;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 import java.util.Random;
 
 public class Asteroid extends Polygon {
-
-    private double x;
-    private double y;
 
     Asteroid() {
         // randomize the factor
@@ -18,6 +15,7 @@ public class Asteroid extends Polygon {
 
         // set color of asteroid
         this.setStroke(Color.GRAY);
+        // this.setFill(Color.GRAY);
 
         // points of an hexagon
         Double[] pointList = {
@@ -29,13 +27,9 @@ public class Asteroid extends Polygon {
                 30.0, 30.0
         };
 
-        for(int i = 0; i < pointList.length; i++) {
-            //change for hitboxes later
-            x = pointList[4]; //hotbox uses random point
-            y = pointList[5]; //hitbox uses random point
-            pointList[i] = morph(pointList[i], scale);
-        }
-
+//        for(int i = 0; i < pointList.length; i++) {
+//            pointList[i] = morph(pointList[i], scale);
+//        }
         this.getPoints().addAll(pointList);
     }
 
@@ -43,13 +37,5 @@ public class Asteroid extends Polygon {
         double variance = new Random().nextInt(20);
 
         return pointList * scale + variance;
-    }
-
-    double getX() {
-        return x;
-    }
-
-    double getY() {
-        return y;
     }
 }

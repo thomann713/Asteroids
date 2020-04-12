@@ -14,6 +14,7 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+import com.almasb.fxgl.texture.Texture;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -34,6 +35,7 @@ public class AsteroidsApp extends GameApplication {
 		settings.setHeight(600);
 		settings.setTitle("Asteroids");
 		settings.setVersion("0.1");
+		settings.setConfigClass(Config.class);
 	}
 
 
@@ -53,15 +55,13 @@ public class AsteroidsApp extends GameApplication {
 			}
 		}, KeyCode.F);
 
-
-
+		int speed = 1;
 
 		input.addAction(new UserAction("Move Right") {
 			@Override
 			protected void onAction() {
-				player.translateX(3); // move right 5 pixels
-				player.rotateBy(5);
-
+				player.translateX(speed); // move right 5 pixels
+				//player.rotateBy(5);
 
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
@@ -70,8 +70,8 @@ public class AsteroidsApp extends GameApplication {
 		input.addAction(new UserAction("Move Left") {
 			@Override
 			protected void onAction() {
-				player.translateX(-3); // move left 5 pixels
-				player.rotateBy(355);
+				player.translateX(speed * -1); // move left 5 pixels
+				//player.rotateBy(355);
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
 		}, KeyCode.A);
@@ -79,7 +79,7 @@ public class AsteroidsApp extends GameApplication {
 		input.addAction(new UserAction("Move Up") {
 			@Override
 			protected void onAction() {
-				player.translateY(-3); // move up 5 pixels
+				player.translateY(speed * -1); // move up 5 pixels
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
 		}, KeyCode.W);
@@ -87,7 +87,7 @@ public class AsteroidsApp extends GameApplication {
 		input.addAction(new UserAction("Move Down") {
 			@Override
 			protected void onAction() {
-				player.translateY(3); // move down 5 pixels
+				player.translateY(speed); // move down 5 pixels
 				FXGL.getGameState().increment("pixelsMoved", +5);
 			}
 		}, KeyCode.S);
@@ -105,10 +105,11 @@ public class AsteroidsApp extends GameApplication {
 
 		player = FXGL.entityBuilder()
 				.type(EntityType.PLAYER)
-				.bbox(new HitBox("PLAYER_BODY", BoundingShape.box(36,36)))
+				.bbox(new HitBox("PLAYER_BODY", BoundingShape.box(32,32)))
 				.at(300, 300)
 				.view("spaceship.png")
 				.with(new CollidableComponent(true))
+				.with(new AnimationComponent())
 				.buildAndAttach();
 
 		FXGL.entityBuilder()
@@ -153,20 +154,12 @@ public class AsteroidsApp extends GameApplication {
 
 		FXGL.getGameWorld().addEntityFactory(new MyAsteroidFactory());
 
-		int numOfAsteroids = 40;
+		int numOfAsteroids = 10;
 		for(int i = 0; i < numOfAsteroids; i++) {
 			int rx = new Random().nextInt(800);
-			int ry = new Random().nextInt(800);
+			int ry = new Random().nextInt(600);
 			SpawnData sd = new SpawnData(rx, ry);
-			sd.put("hitBoxX", 3.4);
-			sd.put("hitBoxY", 4.5);
 			FXGL.spawn("asteroid", sd);
-//			Asteroid a = new Asteroid();
-//			FXGL.entityBuilder()
-//					.at(rx, ry)
-//					.bbox(new HitBox("ASTEROID_BODY", BoundingShape.box(a.getX(), a.getY())))
-//					.viewWithBBox(new Asteroid())
-//					.buildAndAttach();
 		}
 	}
 
@@ -194,7 +187,8 @@ public class AsteroidsApp extends GameApplication {
 
 		FXGL.getGameScene().addUINode(textPixels); // add to the scene graph
 
-		var userTexture = FXGL.getAssetLoader().loadTexture("user.png");
+		Texture userTexture = FXGL.getAssetLoader().loadTexture("user.png");
+
 		userTexture.setTranslateX(50);
 		userTexture.setTranslateY(450);
 
