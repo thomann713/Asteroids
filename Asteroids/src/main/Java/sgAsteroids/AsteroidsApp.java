@@ -1,4 +1,4 @@
-package Asteroid;
+package sgAsteroids;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -20,6 +20,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import java.util.Map;
+import java.util.Random;
 
 
 public class AsteroidsApp extends GameApplication {
@@ -115,6 +116,24 @@ public class AsteroidsApp extends GameApplication {
 				.viewWithBBox(new Circle(15, Color.DARKGRAY))
 				.with(new CollidableComponent(true))
 				.buildAndAttach();
+
+		/*
+		FXGL.getGameWorld().addEntityFactory(new MyAsteroidFactory());
+		FXGL.spawn("asteroid");
+
+		 */
+		
+		// set background
+		FXGL.entityBuilder()
+				.at(0, 0)
+				.zIndex(-1) // behind everything
+				.view(new Rectangle(800, 600, Color.BLACK))
+				.buildAndAttach();
+
+
+
+		// create random asteroids
+		createRandomAsteroids();
 /*
 		PhysicsComponent physics = new PhysicsComponent();
 
@@ -132,6 +151,21 @@ public class AsteroidsApp extends GameApplication {
 		FXGL.getGameWorld().addEntity(player);
 
  */
+	}
+
+
+	private void createRandomAsteroids() {
+		int numOfAsteroids = 40;
+		for(int i = 0; i < numOfAsteroids; i++) {
+			int rx = new Random().nextInt(800);
+			int ry = new Random().nextInt(800);
+			Asteroid a = new Asteroid();
+			FXGL.entityBuilder()
+					.at(rx, ry)
+					.bbox(new HitBox("ASTEROID_BODY", BoundingShape.box(a.getX(), a.getY())))
+					.viewWithBBox(new Asteroid())
+					.buildAndAttach();
+		}
 	}
 
 	@Override
